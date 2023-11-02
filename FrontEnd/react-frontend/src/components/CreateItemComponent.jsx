@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import EmployeeService from '../services/EmployeeService';
 
 export default class CreateItemComponent extends Component {
   constructor(props) {
@@ -20,11 +21,15 @@ export default class CreateItemComponent extends Component {
   saveItem(e) {
     e.preventDefault();
     let item = {
-      Name: this.state.name,
-      Price: this.state.price,
-      Quantity: this.state.quantity,
+      name: this.state.name,
+      price: this.state.price,
+      quantity: this.state.quantity,
     };
     console.log('item => ' + JSON.stringify(item));
+
+    EmployeeService.createEmployee(item).then(res =>{
+      window.location.href = '/employees';
+    });
 
     this.setState({
       name: '',
