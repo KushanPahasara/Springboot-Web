@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import EmployeeService from '../services/EmployeeService'
 import { Link } from 'react-router-dom';
 
+
+
 export default class ListEmployeeComponent extends Component {
   constructor(props){
     super(props)
@@ -9,9 +11,11 @@ export default class ListEmployeeComponent extends Component {
     this.state ={
          employees:[]
     }
+
+    
     
   }
- 
+
    componentDidMount(){
      EmployeeService.getEmployees().then((res) => {
         this.setState({ employees: res.data})
@@ -50,6 +54,9 @@ export default class ListEmployeeComponent extends Component {
                             <td>{employee.name}</td>
                             <td>{employee.price}</td>
                             <td>{employee.quantity}</td>
+                            <td>
+                            <Link to={`/update/${employee.id}`} className="btn btn-success">Update</Link>
+                            </td>
 
                         </tr>
                     )
