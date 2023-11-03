@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import EmployeeService from '../services/EmployeeService'
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 
 
@@ -55,6 +56,7 @@ export default class ListEmployeeComponent extends Component {
                             <td>{employee.price}</td>
                             <td>{employee.quantity}</td>
                             <td>
+                           {/* <Link to={`/update/${employee.id}`} className="btn btn-success">Update</Link> */}
                             <Link to={`/update/${employee.id}`} className="btn btn-success">Update</Link>
                             </td>
 

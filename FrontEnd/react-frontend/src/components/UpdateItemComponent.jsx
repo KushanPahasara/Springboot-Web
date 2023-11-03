@@ -2,23 +2,45 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import EmployeeService from '../services/EmployeeService';
 
+
 export default class UpdateItemComponent extends Component {
     constructor(props) {
         super(props);
     
+        const urlParams = window.location.href.split('/');
+        
+
+        console.log(urlParams)
+       
         this.state = {
+
+          id: urlParams[urlParams.length-1],
           name: '',
           price: '',
           quantity: '',
         };
-    
+
         this.changeNameHandler = this.changeNameHandler.bind(this);
         this.changePriceHandler = this.changePriceHandler.bind(this);
         this.changeQuantityHandler = this.changeQuantityHandler.bind(this);
-        this.saveItem = this.saveItem.bind(this);
+        this.updateItem = this.updateItem.bind(this);
+      }
+
+      
+    
+      componentDidMount() {
+       
+        EmployeeService.getEmployeeById(this.state.id).then((res) => {
+          let item = res.data;
+          this.setState({
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+          });
+        });
       }
     
-      saveItem(e) {
+      updateItem(e) {
         e.preventDefault();
         let item = {
           name: this.state.name,
@@ -26,11 +48,7 @@ export default class UpdateItemComponent extends Component {
           quantity: this.state.quantity,
         };
         console.log('item => ' + JSON.stringify(item));
-    
-        EmployeeService.createEmployee(item).then(res =>{
-          window.location.href = '/employees';
-        });
-    
+
         this.setState({
           name: '',
           price: '',
@@ -56,7 +74,7 @@ export default class UpdateItemComponent extends Component {
             <div className="container">
               <div className="row">
                 <div className="card col-md-6 offset-md-3 offset-md-3">
-                  <h3 className="text-center">Add Item</h3>
+                  <h3 className="text-center">Update Item</h3>
                   <div className="card-body">
                     <form>
                       <div className="form-group">
@@ -95,7 +113,7 @@ export default class UpdateItemComponent extends Component {
                         />
                       </div>
                       <br />
-                      <button className="btn btn-success" onClick={this.saveItem}>
+                      <button className="btn btn-success" onClick={this.updateItem}>
                         Submit
                       </button>
                       <Link to="/" className="btn btn-danger" style={{marginLeft:'10px'}}>Cancel</Link>
