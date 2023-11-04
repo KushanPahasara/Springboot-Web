@@ -47,7 +47,10 @@ export default class UpdateItemComponent extends Component {
           price: this.state.price,
           quantity: this.state.quantity,
         };
-        console.log('item => ' + JSON.stringify(item));
+        console.log('item => ' + JSON.stringify(item,));
+        EmployeeService.updateEmployee(item, this.state.id).then(res =>{
+          window.location.href = '/employees';
+        });
 
         this.setState({
           name: '',
