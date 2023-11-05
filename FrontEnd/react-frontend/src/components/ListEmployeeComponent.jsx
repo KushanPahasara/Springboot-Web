@@ -13,8 +13,13 @@ export default class ListEmployeeComponent extends Component {
          employees:[]
     }
 
-    
-    
+  }
+
+  deleteItem(id){
+    EmployeeService.deleteEmployee(id).then((res) => {
+      this.setState({ employees: this.state.employees.filter(employee => employee.id !== id)});
+   });
+
   }
 
    componentDidMount(){
@@ -56,8 +61,10 @@ export default class ListEmployeeComponent extends Component {
                             <td>{employee.price}</td>
                             <td>{employee.quantity}</td>
                             <td>
-                           {/* <Link to={`/update/${employee.id}`} className="btn btn-success">Update</Link> */}
-                            <Link to={`/update/${employee.id}`} className="btn btn-success">Update</Link>
+                            <button className="btn btn-danger" onClick={() => this.deleteItem(employee.id)}>Delete</button>
+
+                            <Link to={`/update/${employee.id}`} className="btn btn-success" style={{marginLeft:'10px'}}>Update</Link>
+                            
                             </td>
 
                         </tr>
